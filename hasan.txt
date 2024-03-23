@@ -1,0 +1,186 @@
+
+Setting environment for using XAMPP for Windows.
+User@HAMIDAH c:\xampp
+# mysql -u root -p
+Enter password:
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 9
+Server version: 10.4.28-MariaDB mariadb.org binary distribution
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+MariaDB [(none)]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| dbkuliah1          |
+| dbti08             |
+| dbtoko2_database   |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
++--------------------+
+8 rows in set (0.008 sec)
+
+MariaDB [(none)]> CREATE DATABASE dbkuliah2;
+Query OK, 1 row affected (0.018 sec)
+
+MariaDB [(none)]> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| dbkuliah1          |
+| dbkuliah2          |
+| dbti08             |
+| dbtoko2_database   |
+| information_schema |
+| mysql              |
+| performance_schema |
+| phpmyadmin         |
+| test               |
++--------------------+
+9 rows in set (0.003 sec)
+
+MariaDB [(none)]> USE dbkuliah2;
+Database changed
+MariaDB [dbkuliah2]> SHOW TABLES;
+Empty set (0.002 sec)
+
+MariaDB [dbkuliah2]> CREATE TABLE jurusan(
+    -> id int primary key auto_increment not null,
+    -> nama varchar(30) not null unique);
+Query OK, 0 rows affected (0.089 sec)
+
+MariaDB [dbkuliah2]> CREATE TABLE mahasiswa(
+    -> id int primary key auto_increment not null,
+    -> nim int not null,
+    -> nama varchar(50) not null,
+    -> alamat varchar(100) not null,
+    -> idjurusan int references idjenis(id),
+    -> foto varchar(30));
+Query OK, 0 rows affected (0.038 sec)
+
+MariaDB [dbkuliah2]> SHOW TABLES;
++---------------------+
+| Tables_in_dbkuliah2 |
++---------------------+
+| jurusan             |
+| mahasiswa           |
++---------------------+
+2 rows in set (0.014 sec)
+
+MariaDB [dbkuliah2]> DESC jurusan;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nama  | varchar(30) | NO   | UNI | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+2 rows in set (0.093 sec)
+
+MariaDB [dbkuliah2]> DESC mahasiswa;
++-----------+--------------+------+-----+---------+----------------+
+| Field     | Type         | Null | Key | Default | Extra          |
++-----------+--------------+------+-----+---------+----------------+
+| id        | int(11)      | NO   | PRI | NULL    | auto_increment |
+| nim       | int(11)      | NO   |     | NULL    |                |
+| nama      | varchar(50)  | NO   |     | NULL    |                |
+| alamat    | varchar(100) | NO   |     | NULL    |                |
+| idjurusan | int(11)      | YES  |     | NULL    |                |
+| foto      | varchar(30)  | YES  |     | NULL    |                |
++-----------+--------------+------+-----+---------+----------------+
+6 rows in set (0.056 sec)
+
+MariaDB [dbkuliah2]> SELECT * FROM jurusan;
+Empty set (0.163 sec)
+
+MariaDB [dbkuliah2]> INSERT INTO jurusan VALUES
+    -> Teknik Informatika,
+    -> Teknik Mesin,
+    -> Teknik Sipil,
+    -> Teknik Industri,
+    -> Teknik Electro;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'Teknik Informatika,
+Teknik Mesin,
+Teknik Sipil,
+Teknik Industri,
+Teknik Electro' at line 2
+MariaDB [dbkuliah2]> INSERT INTO jurusan VALUES
+    ->  INSERT INTO jurusan(nama) VALUES
+    ->     -> ('Teknik Informatika'), ('Sistem Informasi'),('Bisnis Digital'),('Design'),('Rekayasa Software');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'INSERT INTO jurusan(nama) VALUES
+    -> ('Teknik Informatika'), ('Sistem Info...' at line 2
+MariaDB [dbkuliah2]>  INSERT INTO jurusan(nama) VALUES
+    ->     -> ('Teknik Informatika'), ('Teknik Industri'),('Teknik Sipil'),('Teknik Mesin'),('Teknik Electro');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near '-> ('Teknik Informatika'), ('Teknik Industri'),('Teknik Sipil'),('Teknik Mesi...' at line 2
+MariaDB [dbkuliah2]> ('Teknik Informatika'), ('Teknik Industri'),('Teknik Sipil'),('Teknik Mesin'),('Teknik Electro');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ''Teknik Informatika'), ('Teknik Industri'),('Teknik Sipil'),('Teknik Mesin'),...' at line 1
+MariaDB [dbkuliah2]> INSERT INTO jurusan(nama) VALUES
+    -> ('Teknik Informatika'), ('Teknik Industri'),('Teknik Sipil'),('Teknik Mesin'),('Teknik Electro');
+Query OK, 5 rows affected (0.020 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+MariaDB [dbkuliah2]> DESC jurusan;
++-------+-------------+------+-----+---------+----------------+
+| Field | Type        | Null | Key | Default | Extra          |
++-------+-------------+------+-----+---------+----------------+
+| id    | int(11)     | NO   | PRI | NULL    | auto_increment |
+| nama  | varchar(30) | NO   | UNI | NULL    |                |
++-------+-------------+------+-----+---------+----------------+
+2 rows in set (0.043 sec)
+
+MariaDB [dbkuliah2]> SELECT * FROM jurusan;
++----+--------------------+
+| id | nama               |
++----+--------------------+
+|  5 | Teknik Electro     |
+|  2 | Teknik Industr     |
+|  1 | Teknik Informatika |
+|  4 | Teknik Mesin       |
+|  3 | Teknik Sipil       |
++----+--------------------+ * FROM jurusan;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'INSER+ * FROM jurusan' at line 1
+MariaDB [dbkuliah2]> INSERT INTO mahasiswa(nim,nama,alamat,idjurusan,fot
+o) VALUES
+    -> (0110223242,'Muhammad Hasan Al amin','Jakarta Timur',4,hasan.jpg);
+ERROR 1054 (42S22): Unknown column 'hasan.jpg' in 'field list'
+MariaDB [dbkuliah2]> INSERT INTO mahasiswa(nim,nama,alamat,idjurusan,foto) VALUES
+    -> (0110223242,'Muhammad Hasan Al amin','Jakarta Timur',4,'hasan.jpg
+');
+Query OK, 1 row affected (0.015 sec)
+
+MariaDB [dbkuliah2]> SELECT * FROM mahasiswa;
++----+-----------+------------------------+---------------+-----------+-----------+
+| id | nim       | nama                   | alamat        | idjurusan | foto      |
++----+-----------+------------------------+---------------+-----------+-----------+
+|  1 | 110223242 | Muhammad Hasan Al amin | Jakarta Timur |         4 | hasan.jpg |
++----+-----------+------------------------+---------------+-----------+-----------+
+1 row in set (0.002 sec)
+
+MariaDB [dbkuliah2]>
+
+                     INSERT INTO mahasiswa(nim,nama,alamat,idjurusan,foto) VALUES
+    -> (0110223237,'Rizqi Fadilah','Bekasi',1,'rizqi.jpg'),
+    -> (0110223251,'Jamaluddin Al mandili','Depok',3,'jamal.jpg'),
+    -> (0110223260,'Nicky Bryan Pradana','Palembang',2,'bryan.jpg'),
+    -> (0110223252,'Feri Ardiansyah','Medan',5,'feri.jpg');
+Query OK, 4 rows affected (0.014 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+MariaDB [dbkuliah2]> SELECT * FROM mahasiswa;
++----+-----------+------------------------+---------------+-----------+-----------+
+| id | nim       | nama                   | alamat        | idjurusan | foto      |
++----+-----------+------------------------+---------------+-----------+-----------+
+|  1 | 110223242 | Muhammad Hasan Al amin | Jakarta Timur |         4 | hasan.jpg |
+|  2 | 110223237 | Rizqi Fadilah          | Bekasi        |         1 | rizqi.jpg |
+|  3 | 110223251 | Jamaluddin Al mandili  | Depok         |         3 | jamal.jpg |
+|  4 | 110223260 | Nicky Bryan Pradana    | Palembang     |         2 | bryan.jpg |
+|  5 | 110223252 | Feri Ardiansyah        | Medan         |         5 | feri.jpg  |
++----+-----------+------------------------+---------------+-----------+-----------+
+5 rows in set (0.001 sec)
+
+MariaDB [dbkuliah2]>
